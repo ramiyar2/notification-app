@@ -55,7 +55,7 @@ class _LastNotfiyState extends State<LastNotfiy> {
                     shrinkWrap: true,
                     itemCount: taskList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      var task = taskList[index];
+                      Reminder task = taskList[index];
                       return Container(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 20,
@@ -78,7 +78,10 @@ class _LastNotfiyState extends State<LastNotfiy> {
                             style: const TextStyle(color: Colors.white54),
                           ),
                           trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              ReminderController().deletTask(reminder: task);
+                              getData();
+                            },
                             icon: const Icon(Icons.task_alt_outlined),
                           ),
                         ),
