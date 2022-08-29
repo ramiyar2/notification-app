@@ -48,7 +48,7 @@ class _LastNotfiyState extends State<LastNotfiy> {
               child: Obx(() {
                 if (taskList.isEmpty) {
                   return Container(
-                    child: const Text('no task'),
+                    child: const Text('no tasks'),
                   );
                 } else {
                   return ListView.separated(

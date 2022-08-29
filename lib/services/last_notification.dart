@@ -23,6 +23,6 @@ notifyScheduler(DateTime dateTime, Task task) {
       dateTime,
     );
   } else {
-    print('scheduler will not called $dateTime');
+    print('scheduler will not called $dateTime < ${DateTime.now()}');
   }
 }
