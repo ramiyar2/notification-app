@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     getData();
-    getLastNotificationData();
+    setState(() => notificationTaskList = getLastNotificationDataFun());
     notifyHelper = NotifyHelper();
     notifyHelper.requestIosPermision();
     notifyHelper.initializeNotify();
@@ -37,10 +37,6 @@ class _HomePageState extends State<HomePage> {
   getData() async {
     var tasks = await TaskController().getTasks();
     setState(() => taskList = tasks);
-  }
-
-  getLastNotificationData() async {
-    setState(() => notificationTaskList = getLastNotificationDataFun());
   }
 
   @override
@@ -81,7 +77,6 @@ class _HomePageState extends State<HomePage> {
               await Get.to(() => AddTask());
               // _taskController.getTasks();
               getData();
-              getLastNotificationData();
             },
             child: Container(
               margin: const EdgeInsets.all(20),
