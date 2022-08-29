@@ -7,6 +7,12 @@ With this app we learn how to save data in a local SQL table, how to send a loca
 
 https://user-images.githubusercontent.com/56196099/187053143-702f116d-f08e-475b-9fbd-f43e8451c09c.mp4
 
+## ⤴️ What's new
+
+Add number of notification on home page notification icon,
+Add button to make notification as read
+
+https://user-images.githubusercontent.com/56196099/187260202-a98e0aa0-900f-4622-bd87-99b9b7eb1d67.mp4
 
 ## ⤵ Installation
 
