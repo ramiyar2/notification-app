@@ -40,11 +40,9 @@ class ReminderController extends GetxController {
   getTasks() async {
     final List<Map<String, dynamic>> dbTasks =
         await HelperDb.quary(isNotify: true);
-    print('get data $dbTasks');
     reminderList.assignAll(dbTasks.map((data) {
       return Reminder.fromJson(data);
     }).toList());
-    // print(tasks);
     return reminderList;
   }
 
