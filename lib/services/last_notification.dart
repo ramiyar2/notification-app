@@ -1,5 +1,6 @@
 import 'package:notification_app/controller/controller.dart';
 import 'package:notification_app/models/task.dart';
+import 'package:notification_app/services/get_num_notification.dart';
 import 'package:schedulers/schedulers.dart';
 
 import '../models/reminder.dart';
@@ -18,7 +19,7 @@ notifyScheduler(DateTime dateTime, Task task) {
               date: task.date,
               remindTime: task.remindTime),
         );
-        print(value);
+        getLastNotificationDataFun();
       },
       dateTime,
     );
