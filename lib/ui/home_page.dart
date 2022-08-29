@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -23,15 +25,14 @@ class _HomePageState extends State<HomePage> {
   late NotifyHelper notifyHelper;
   RxList<Task> taskList = <Task>[].obs;
   RxList<Reminder> notificationTaskList = <Reminder>[].obs;
-  late int notifyLength;
+  Timer? timer;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
-    setState(() {
-      notifyLength = getnotifyLength();
-    });
+    // timer = Timer.periodic(
+    //     Duration(seconds: 2), (Timer t) => getLastNotificationData());
     notifyHelper = NotifyHelper();
     notifyHelper.requestIosPermision();
     notifyHelper.initializeNotify();
@@ -44,6 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   // getLastNotificationData() async {
   //   RxList<Reminder> tasks = await ReminderController().getTasks();
+  //   print('notificationTaskList.length = ${notificationTaskList.length}');
   //   setState(() => notificationTaskList = tasks);
   // }
 
@@ -53,26 +55,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.to(LastNotfiy()),
-          icon: Stack(
-            alignment: Alignment.topRight,
-            children: [
-              const Icon(Icons.notifications_rounded),
-              SizedBox(
-                width: 15,
-                height: 15,
-                child: CircleAvatar(
-                  backgroundColor: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(0.0),
-                    child: Text(
-                      notifyLength.toString(),
-                      style: TextStyle(color: Colors.white, fontSize: 9),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          icon: const Notification(),
         ),
         backgroundColor: context.theme.backgroundColor,
       ),
@@ -111,74 +94,79 @@ class _HomePageState extends State<HomePage> {
                   child: const Text('no task'),
                 );
               } else {
-                return ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: taskList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var task = taskList[index];
-
-                    String type = task.remindTime.toString().split(' ')[1];
-                    var date = DateFormat.jm().parse(task.remindTime!);
-                    var time = DateFormat('hh:mm').format(date);
-                    int hour = int.parse(time.toString().split(':')[0]);
-                    int minutes = int.parse(time.toString().split(':')[1]);
-
-                    List<String> splitDate = task.date!.split('/');
-                    DateTime dateTime = DateTime(
-                        int.parse(splitDate[2]),
-                        int.parse(splitDate[0]),
-                        int.parse(splitDate[1]),
-                        type == 'PM'
-                            ? hour + 12
-                            : hour == 12
-                                ? 0
-                                : hour,
-                        minutes);
-                    notifyScheduler(dateTime, task);
-                    notifyHelper.scheduledNotify(
-                        hour: type == 'PM'
-                            ? hour + 12
-                            : hour == 12
-                                ? 0
-                                : hour,
-                        minutes: minutes,
-                        task: task);
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.teal,
-                      ),
-                      width: double.infinity,
-                      child: ListTile(
-                        title: Text(
-                          task.title!,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        subtitle: Text(
-                          task.date!,
-                          style: const TextStyle(color: Colors.white54),
-                        ),
-                        trailing: Text(
-                          task.remindTime!,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 10,
-                    );
-                  },
-                );
+                return printTaskList();
               }
             }),
           ),
         ],
       ),
+    );
+  }
+
+  ListView printTaskList() {
+    print('printTaskList called');
+    return ListView.separated(
+      shrinkWrap: true,
+      itemCount: taskList.length,
+      itemBuilder: (BuildContext context, int index) {
+        var task = taskList[index];
+
+        String type = task.remindTime.toString().split(' ')[1];
+        var date = DateFormat.jm().parse(task.remindTime!);
+        var time = DateFormat('hh:mm').format(date);
+        int hour = int.parse(time.toString().split(':')[0]);
+        int minutes = int.parse(time.toString().split(':')[1]);
+
+        List<String> splitDate = task.date!.split('/');
+        DateTime dateTime = DateTime(
+            int.parse(splitDate[2]),
+            int.parse(splitDate[0]),
+            int.parse(splitDate[1]),
+            type == 'PM'
+                ? hour + 12
+                : hour == 12
+                    ? 0
+                    : hour,
+            minutes);
+        notifyScheduler(dateTime, task);
+        notifyHelper.scheduledNotify(
+            hour: type == 'PM'
+                ? hour + 12
+                : hour == 12
+                    ? 0
+                    : hour,
+            minutes: minutes,
+            task: task);
+        return Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.teal,
+          ),
+          width: double.infinity,
+          child: ListTile(
+            title: Text(
+              task.title!,
+              style: const TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              task.date!,
+              style: const TextStyle(color: Colors.white54),
+            ),
+            trailing: Text(
+              task.remindTime!,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox(
+          height: 10,
+        );
+      },
     );
   }
 }
