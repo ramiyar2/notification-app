@@ -68,7 +68,7 @@ class _LastNotfiyState extends State<LastNotfiy> {
                         child: ListTile(
                           onTap: () => Get.to(NotifictionScreen(
                               txt:
-                                  '${task.title}-${task.date}-${task.remindTime}-${task.id}')),
+                                  '${task.title}${task.note}-${task.date}-${task.remindTime}-${task.id}')),
                           title: Text(
                             task.title!,
                             style: const TextStyle(color: Colors.white),

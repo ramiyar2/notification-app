@@ -186,6 +186,7 @@ class _AddTaskState extends State<AddTask> {
       int value = await _taskController.addTask(
         task: Task(
             title: title.text,
+            note: note.text,
             date: DateFormat.yMd().format(selectedDate),
             remindTime: reminderTime),
       );

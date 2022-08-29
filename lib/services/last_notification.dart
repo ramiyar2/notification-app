@@ -16,6 +16,7 @@ notifyScheduler(DateTime dateTime, Task task) {
               id: task.id,
               title: task.title,
               date: task.date,
+              note: task.note,
               remindTime: task.remindTime),
         );
         print(value);
