@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:notification_app/models/reminder.dart';
+import 'package:notification_app/services/get_num_notification.dart';
 import 'package:notification_app/services/last_notification.dart';
 import 'package:notification_app/ui/add_task.dart';
 import 'package:schedulers/schedulers.dart';
@@ -39,9 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   getLastNotificationData() async {
-    RxList<Reminder> notificationTasks = await ReminderController().getTasks();
-    print(notificationTasks.length);
-    setState(() => notificationTaskList = notificationTasks);
+    setState(() => notificationTaskList = getLastNotificationDataFun());
   }
 
   @override
