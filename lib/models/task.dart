@@ -4,13 +4,15 @@ class Task {
   String? title;
   String? date;
   String? remindTime;
-  Task({this.id, this.title, this.date, this.remindTime});
+  String? note;
+  Task({this.id, this.title, this.date, this.note, this.remindTime});
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
       'title': title,
       'date': date,
+      'note': note,
       'remindTime': remindTime,
     };
   }
@@ -19,12 +21,13 @@ class Task {
     id = map['id'];
     title = map['title'];
     date = map['date'];
+    note = map['note'];
     remindTime = map['remindTime'];
   }
 
   // Function for debuge mode only
   @override
   String toString() {
-    return 'Task(id = $id,title = $title,date = $date,remindTime = $remindTime)';
+    return 'Task(id = $id,title = $title,date = $date,note: $note, remindTime = $remindTime)';
   }
 }
