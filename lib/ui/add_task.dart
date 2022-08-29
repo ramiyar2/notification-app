@@ -15,6 +15,7 @@ class _AddTaskState extends State<AddTask> {
   final TaskController _taskController = Get.put(TaskController());
 
   TextEditingController title = TextEditingController();
+  TextEditingController note = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
 
@@ -37,7 +38,7 @@ class _AddTaskState extends State<AddTask> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'title',
+              'Title',
               style: TextStyle(fontSize: 20),
             ),
             TextField(
@@ -59,6 +60,33 @@ class _AddTaskState extends State<AddTask> {
                 ),
               ),
               controller: title,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'Note',
+              style: TextStyle(fontSize: 20),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter your Note',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 1,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: Colors.teal,
+                    width: 1,
+                  ),
+                ),
+              ),
+              controller: note,
             ),
             const SizedBox(
               height: 20,
@@ -145,7 +173,7 @@ class _AddTaskState extends State<AddTask> {
   }
 
   checkData() {
-    if (title.text.isNotEmpty) {
+    if (title.text.isNotEmpty || note.text.isNotEmpty) {
       _addTaskToDb();
       Get.back();
     } else {
