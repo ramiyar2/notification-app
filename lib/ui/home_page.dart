@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     getData();
-    setState(() => notificationTaskList = getLastNotificationDataFun());
+    //setState(() => notificationTaskList = getLastNotificationDataFun());
     notifyHelper = NotifyHelper();
     notifyHelper.requestIosPermision();
     notifyHelper.initializeNotify();
