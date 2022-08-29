@@ -22,9 +22,9 @@ class HelperDb {
             onCreate: (Database db, int version) async {
           // When creating the db, create the table
           await db.execute(
-              'CREATE TABLE $_nameTaskes (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, remindTime STRING, date STRING)');
+              'CREATE TABLE $_nameTaskes (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, note STRING, remindTime STRING, date STRING)');
           await db.execute(
-              'CREATE TABLE $_nameNofiye (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, remindTime STRING, date STRING)');
+              'CREATE TABLE $_nameNofiye (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, note STRING, remindTime STRING, date STRING)');
         });
         debugPrint('db created');
       } catch (e) {
