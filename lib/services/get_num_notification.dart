@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 import '../controller/controller.dart';
 import '../models/reminder.dart';
 
-class Notification extends StatefulWidget {
-  const Notification({Key? key}) : super(key: key);
+class GetNotification extends StatefulWidget {
+  const GetNotification({Key? key}) : super(key: key);
 
   @override
-  State<Notification> createState() => _NotificationState();
+  State<GetNotification> createState() => _NotificationState();
 }
 
-class _NotificationState extends State<Notification> {
+class _NotificationState extends State<GetNotification> {
   RxList<Reminder> notificationTaskList = <Reminder>[].obs;
   Timer? timer;
   @override
