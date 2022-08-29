@@ -96,7 +96,11 @@ class _HomePageState extends State<HomePage> {
                         int.parse(splitDate[2]),
                         int.parse(splitDate[0]),
                         int.parse(splitDate[1]),
-                        hour,
+                        type == 'PM'
+                            ? hour + 12
+                            : hour == 12
+                                ? 0
+                                : hour,
                         minutes);
                     notifyScheduler(dateTime, task);
                     notifyHelper.scheduledNotify(
