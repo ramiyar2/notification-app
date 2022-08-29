@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:notification_app/models/reminder.dart';
 import 'package:notification_app/services/get_num_notification.dart';
 import 'package:notification_app/services/last_notification.dart';
 import 'package:notification_app/ui/add_task.dart';
-import 'package:schedulers/schedulers.dart';
 import '../controller/controller.dart';
 import '../models/task.dart';
 import '../services/notification_services.dart';
@@ -21,18 +17,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //final TaskController _taskController = Get.put(TaskController());
   late NotifyHelper notifyHelper;
   RxList<Task> taskList = <Task>[].obs;
-  RxList<Reminder> notificationTaskList = <Reminder>[].obs;
-  Timer? timer;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
-    // timer = Timer.periodic(
-    //     Duration(seconds: 2), (Timer t) => getLastNotificationData());
     notifyHelper = NotifyHelper();
     notifyHelper.requestIosPermision();
     notifyHelper.initializeNotify();
@@ -43,19 +34,13 @@ class _HomePageState extends State<HomePage> {
     setState(() => taskList = tasks);
   }
 
-  // getLastNotificationData() async {
-  //   RxList<Reminder> tasks = await ReminderController().getTasks();
-  //   print('notificationTaskList.length = ${notificationTaskList.length}');
-  //   setState(() => notificationTaskList = tasks);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.to(LastNotfiy()),
-          icon: const Notification(),
+          icon: Notification(),
         ),
         backgroundColor: context.theme.backgroundColor,
       ),
