@@ -49,6 +49,6 @@ class ReminderController extends GetxController {
   }
 
   deletTask({required Reminder reminder}) async {
-    await HelperDb.delete(reminder, isNotify: true);
+    await HelperDb.delete(reminder: reminder, isNotify: true);
   }
 }
