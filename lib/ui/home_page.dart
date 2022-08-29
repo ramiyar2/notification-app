@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:notification_app/models/reminder.dart';
 import 'package:notification_app/services/last_notification.dart';
 import 'package:notification_app/ui/add_task.dart';
 import 'package:schedulers/schedulers.dart';
@@ -20,11 +21,13 @@ class _HomePageState extends State<HomePage> {
   //final TaskController _taskController = Get.put(TaskController());
   late NotifyHelper notifyHelper;
   RxList<Task> taskList = <Task>[].obs;
+  RxList<Reminder> notificationTaskList = <Reminder>[].obs;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
+    getLastNotificationData();
     notifyHelper = NotifyHelper();
     notifyHelper.requestIosPermision();
     notifyHelper.initializeNotify();
@@ -35,13 +38,41 @@ class _HomePageState extends State<HomePage> {
     setState(() => taskList = tasks);
   }
 
+  getLastNotificationData() async {
+    RxList<Reminder> notificationTasks = await ReminderController().getTasks();
+    print(notificationTasks.length);
+    setState(() => notificationTaskList = notificationTasks);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Get.to(LastNotfiy()),
-            icon: const Icon(Icons.notifications_rounded)),
+          onPressed: () => Get.to(LastNotfiy()),
+          icon: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              const Icon(Icons.notifications_rounded),
+              notificationTaskList.length == 0
+                  ? Container()
+                  : SizedBox(
+                      width: 15,
+                      height: 15,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Text(
+                            notificationTaskList.length.toString(),
+                            style: TextStyle(color: Colors.white, fontSize: 9),
+                          ),
+                        ),
+                      ),
+                    ),
+            ],
+          ),
+        ),
         backgroundColor: context.theme.backgroundColor,
       ),
       body: Column(
@@ -51,6 +82,7 @@ class _HomePageState extends State<HomePage> {
               await Get.to(() => AddTask());
               // _taskController.getTasks();
               getData();
+              getLastNotificationData();
             },
             child: Container(
               margin: const EdgeInsets.all(20),
