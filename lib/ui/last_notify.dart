@@ -77,9 +77,9 @@ class _LastNotfiyState extends State<LastNotfiy> {
                             task.date!,
                             style: const TextStyle(color: Colors.white54),
                           ),
-                          trailing: Text(
-                            task.remindTime!,
-                            style: const TextStyle(color: Colors.white),
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.task_alt_outlined),
                           ),
                         ),
                       );
