@@ -23,12 +23,15 @@ class _HomePageState extends State<HomePage> {
   late NotifyHelper notifyHelper;
   RxList<Task> taskList = <Task>[].obs;
   RxList<Reminder> notificationTaskList = <Reminder>[].obs;
+  late int notifyLength;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
-    //setState(() => notificationTaskList = getLastNotificationDataFun());
+    setState(() {
+      notifyLength = getnotifyLength();
+    });
     notifyHelper = NotifyHelper();
     notifyHelper.requestIosPermision();
     notifyHelper.initializeNotify();
@@ -38,6 +41,11 @@ class _HomePageState extends State<HomePage> {
     var tasks = await TaskController().getTasks();
     setState(() => taskList = tasks);
   }
+
+  // getLastNotificationData() async {
+  //   RxList<Reminder> tasks = await ReminderController().getTasks();
+  //   setState(() => notificationTaskList = tasks);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,22 +57,20 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.topRight,
             children: [
               const Icon(Icons.notifications_rounded),
-              notificationTaskList.length == 0
-                  ? Container()
-                  : SizedBox(
-                      width: 15,
-                      height: 15,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.red,
-                        child: Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: Text(
-                            notificationTaskList.length.toString(),
-                            style: TextStyle(color: Colors.white, fontSize: 9),
-                          ),
-                        ),
-                      ),
+              SizedBox(
+                width: 15,
+                height: 15,
+                child: CircleAvatar(
+                  backgroundColor: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Text(
+                      notifyLength.toString(),
+                      style: TextStyle(color: Colors.white, fontSize: 9),
                     ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
