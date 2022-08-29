@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.to(LastNotfiy()),
-          icon: Notification(),
+          icon: const GetNotification(),
         ),
         backgroundColor: context.theme.backgroundColor,
       ),

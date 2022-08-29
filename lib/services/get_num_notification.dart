@@ -21,7 +21,7 @@ class _NotificationState extends State<GetNotification> {
     // TODO: implement initState
     super.initState();
     timer = Timer.periodic(
-        Duration(seconds: 2), (Timer t) => getLastNotificationData());
+        const Duration(seconds: 2), (Timer t) => getLastNotificationData());
   }
 
   getLastNotificationData() async {
@@ -48,7 +48,7 @@ class _NotificationState extends State<GetNotification> {
                     padding: const EdgeInsets.all(0.0),
                     child: Text(
                       notificationTaskList.length.toString(),
-                      style: TextStyle(color: Colors.white, fontSize: 9),
+                      style: const TextStyle(color: Colors.white, fontSize: 9),
                     ),
                   ),
                 ),
