@@ -51,10 +51,13 @@ class HelperDb {
         : await _db!.query(_nameTaskes);
   }
 
-  static Future<int> delete(Task task, {required bool isNotify}) async {
+  static Future<int> delete(
+      {Task? task, Reminder? reminder, required bool isNotify}) async {
     return isNotify
-        ? await _db!.delete(_nameNofiye, where: 'id = ?', whereArgs: [task.id])
-        : await _db!.delete(_nameTaskes, where: 'id = ?', whereArgs: [task.id]);
+        ? await _db!
+            .delete(_nameNofiye, where: 'id = ?', whereArgs: [reminder!.id])
+        : await _db!
+            .delete(_nameTaskes, where: 'id = ?', whereArgs: [task!.id]);
   }
 
   static Future<int> update(
