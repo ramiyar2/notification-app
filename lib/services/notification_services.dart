@@ -77,7 +77,7 @@ class NotifyHelper {
       task.title,
       task.note,
       //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-      _nextInstanceOfTenAM(hour, minutes),
+      _nextInstanceOfTenAM(task.date!, hour, minutes),
       const NotificationDetails(
           android: AndroidNotificationDetails(
               'your channel id', 'your channel name',
@@ -91,11 +91,16 @@ class NotifyHelper {
     );
   }
 
-  tz.TZDateTime _nextInstanceOfTenAM(int hour, int minutes) {
+  tz.TZDateTime _nextInstanceOfTenAM(String date, int hour, int minutes) {
+    List<String> dataTime = date.split('/');
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
-
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+        tz.local,
+        int.parse(dataTime[2]),
+        int.parse(dataTime[1]),
+        int.parse(dataTime[0]),
+        hour,
+        minutes);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
