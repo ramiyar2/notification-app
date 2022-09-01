@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notification_app/controller/controller.dart';
+import 'package:notification_app/models/reminder.dart';
 
 class NotifictionScreen extends StatefulWidget {
   NotifictionScreen({Key? key, required this.txt}) : super(key: key);
@@ -10,6 +12,24 @@ class NotifictionScreen extends StatefulWidget {
 }
 
 class _NotifictionScreenState extends State<NotifictionScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    makeTaskRead();
+  }
+
+  makeTaskRead() async {
+    await ReminderController().makeTaskRead(Reminder(
+      id: int.parse(widget.txt.toString().split('-')[4]),
+      title: widget.txt.toString().split('-')[0],
+      date: widget.txt.toString().split('-')[2],
+      remindTime: widget.txt.toString().split('-')[3],
+      isRead: 1,
+      note: widget.txt.toString().split('-')[1],
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

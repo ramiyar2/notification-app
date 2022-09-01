@@ -62,13 +62,17 @@ class _LastNotfiyState extends State<LastNotfiy> {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.teal,
+                          color:
+                              task.isRead == 0 ? Colors.teal : Colors.black87,
                         ),
                         width: double.infinity,
                         child: ListTile(
-                          onTap: () => Get.to(NotifictionScreen(
-                              txt:
-                                  '${task.title}${task.note}-${task.date}-${task.remindTime}-${task.id}')),
+                          onTap: () async {
+                            await Get.to(NotifictionScreen(
+                                txt:
+                                    '${task.title}-${task.note}-${task.date}-${task.remindTime}-${task.id}'));
+                            getData();
+                          },
                           title: Text(
                             task.title!,
                             style: const TextStyle(color: Colors.white),
@@ -82,7 +86,8 @@ class _LastNotfiyState extends State<LastNotfiy> {
                               ReminderController().deletTask(reminder: task);
                               getData();
                             },
-                            icon: const Icon(Icons.task_alt_outlined),
+                            icon: const Icon(Icons.task_alt_outlined,
+                                color: Colors.white),
                           ),
                         ),
                       );

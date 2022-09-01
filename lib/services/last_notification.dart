@@ -17,7 +17,8 @@ notifyScheduler(DateTime dateTime, Task task) {
               title: task.title,
               date: task.date,
               note: task.note,
-              remindTime: task.remindTime),
+              remindTime: task.remindTime,
+              isRead: 0),
         );
         print(value);
       },

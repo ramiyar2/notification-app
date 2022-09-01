@@ -5,7 +5,14 @@ class Reminder {
   String? date;
   String? note;
   String? remindTime;
-  Reminder({this.id, this.title, this.date, this.note, this.remindTime});
+  int? isRead;
+  Reminder(
+      {this.id,
+      this.title,
+      this.date,
+      this.note,
+      this.remindTime,
+      this.isRead});
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -14,6 +21,7 @@ class Reminder {
       'date': date,
       'note': note,
       'remindTime': remindTime,
+      'isRead': isRead,
     };
   }
 
@@ -23,11 +31,12 @@ class Reminder {
     date = map['date'];
     note = map['note'];
     remindTime = map['remindTime'];
+    isRead = map['isRead'];
   }
 
   // Function for debuge mode only
   @override
   String toString() {
-    return 'Task(id = $id,title = $title,date = $date,note: $note,remindTime = $remindTime)';
+    return 'Task(id = $id,title = $title,date = $date,note: $note,remindTime = $remindTime,isRead = $isRead)';
   }
 }

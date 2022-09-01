@@ -24,7 +24,7 @@ class HelperDb {
           await db.execute(
               'CREATE TABLE $_nameTaskes (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, note STRING, remindTime STRING, date STRING)');
           await db.execute(
-              'CREATE TABLE $_nameNofiye (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, note STRING, remindTime STRING, date STRING)');
+              'CREATE TABLE $_nameNofiye (id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, note STRING, remindTime STRING, date STRING,isRead INTEGER)');
         });
         debugPrint('db created');
       } catch (e) {
@@ -36,6 +36,7 @@ class HelperDb {
   static Future<int> putData(
       {Task? task, Reminder? reminder, required bool isNotify}) async {
     print('data inserted');
+    await initDb();
     return isNotify
         ? await _db!.insert(_nameNofiye, reminder!.toJson(),
             conflictAlgorithm: ConflictAlgorithm.replace)
@@ -45,6 +46,7 @@ class HelperDb {
 
   static Future<List<Map<String, dynamic>>> quary(
       {required bool isNotify}) async {
+    await initDb();
     print('quary called');
     return isNotify
         ? await _db!.query(_nameNofiye)
@@ -53,6 +55,7 @@ class HelperDb {
 
   static Future<int> delete(
       {Task? task, Reminder? reminder, required bool isNotify}) async {
+    await initDb();
     return isNotify
         ? await _db!
             .delete(_nameNofiye, where: 'id = ?', whereArgs: [reminder!.id])
@@ -62,8 +65,12 @@ class HelperDb {
 
   static Future<int> update(
       {Task? task, Reminder? reminder, required bool isNotify}) async {
+    print('update Db called');
+    await initDb();
     return isNotify
-        ? await _db!.update(_nameNofiye, reminder!.toJson())
-        : await _db!.update(_nameTaskes, task!.toJson());
+        ? await _db!.update(_nameNofiye, reminder!.toJson(),
+            where: 'id = ?', whereArgs: [reminder.id])
+        : await _db!.update(_nameTaskes, task!.toJson(),
+            where: 'id = ?', whereArgs: [task.id]);
   }
 }
