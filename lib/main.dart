@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notification_app/db/db.dart';
 import 'package:notification_app/services/bg_task_manager.dart';
-import 'package:notification_app/ui/home_page.dart';
+import 'package:notification_app/screens/home_page.dart';
 import 'package:workmanager/workmanager.dart';
 
 void main() async {
