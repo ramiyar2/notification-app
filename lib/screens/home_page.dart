@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:notification_app/ui/add_task.dart';
+import 'add_task.dart';
 import '../controller/controller.dart';
 import '../models/task.dart';
 import '../services/get_num_notification.dart';
