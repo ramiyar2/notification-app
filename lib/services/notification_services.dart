@@ -6,7 +6,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:rxdart/rxdart.dart';
 
-import '../ui/notifiction_screen.dart';
+import '../screens/notifiction_screen.dart';
 import '../models/task.dart';
 
 class NotifyHelper {
