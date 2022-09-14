@@ -110,8 +110,6 @@ class _HomePageState extends State<HomePage> {
                     ? 0
                     : hour,
             minutes);
-        notifyManagment(dateTime, task);
-        //notifyScheduler(dateTime, task);
         notifyHelper.scheduledNotify(
             hour: type == 'PM'
                 ? hour + 12
@@ -120,6 +118,8 @@ class _HomePageState extends State<HomePage> {
                     : hour,
             minutes: minutes,
             task: task);
+        notifyManagment(dateTime, task);
+        //notifyScheduler(dateTime, task);
         return Container(
           margin: const EdgeInsets.symmetric(
             horizontal: 20,
