@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     var tasks = await TaskController().getTasks();
     setState(() => taskList = tasks);
     taskList.sort((b, a) {
-      var r = (a.date)!.compareTo(b.date!);
+      var r = (b.date)!.compareTo(a.date!);
       if (r == 0) {
         var timeA =
             DateFormat('HH:mm').format(DateFormat.jm().parse(a.remindTime!));
