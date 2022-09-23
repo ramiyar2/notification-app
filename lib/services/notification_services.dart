@@ -6,6 +6,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:rxdart/rxdart.dart';
 
+import '../models/reminder.dart';
 import '../screens/notifiction_screen.dart';
 import '../models/task.dart';
 
@@ -52,7 +53,7 @@ class NotifyHelper {
     // await Get.to(NotifictionScreen(txt: payload));
   }
 
-  displayNotify({required String title, required String body}) async {
+  displayNotify({required Reminder task}) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails('your channel id', 'your channel name',
             channelDescription: 'your channel description',
@@ -65,9 +66,10 @@ class NotifyHelper {
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iosPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0, title, body, platformChannelSpecifics,
-        payload: 'Default_Sound');
+    await flutterLocalNotificationsPlugin.show(0, task.title.toString(),
+        task.note.toString(), platformChannelSpecifics,
+        payload:
+            '${task.title}-${task.note}-${task.date}-${task.remindTime}-${task.id}');
   }
 
   scheduledNotify(

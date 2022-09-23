@@ -25,7 +25,6 @@ class _NotificationState extends State<GetNotification> {
 
   getLastNotificationData() async {
     RxList<Reminder> tasks = await ReminderController().getTasks();
-    print('notificationTaskList.length = ${notificationTaskList.length}');
     setState(() => notificationTaskList =
         tasks.where((Reminder element) => element.isRead == 0).toList().obs);
   }

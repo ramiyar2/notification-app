@@ -8,7 +8,7 @@ import 'package:workmanager/workmanager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HelperDb.initDb();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   runApp(const MyApp());
 }
 

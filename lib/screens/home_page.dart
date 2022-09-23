@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:workmanager/workmanager.dart';
+import '../services/get_time.dart';
 import 'add_task.dart';
 import '../controller/controller.dart';
 import '../models/task.dart';
@@ -19,6 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late NotifyHelper notifyHelper;
   RxList<Task> taskList = <Task>[].obs;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +34,24 @@ class _HomePageState extends State<HomePage> {
   getData() async {
     var tasks = await TaskController().getTasks();
     setState(() => taskList = tasks);
+    taskList.sort((b, a) {
+      var r = (a.date)!.compareTo(b.date!);
+      if (r == 0) {
+        var timeA =
+            DateFormat('HH:mm').format(DateFormat.jm().parse(a.remindTime!));
+        int hourA = int.parse(timeA.toString().split(':')[0]);
+        int minutesA = int.parse(timeA.toString().split(':')[1]);
+        var timeB =
+            DateFormat('HH:mm').format(DateFormat.jm().parse(b.remindTime!));
+        int hourB = int.parse(timeB.toString().split(':')[0]);
+        int minutesB = int.parse(timeB.toString().split(':')[1]);
+
+        DateTime dateTimeA = DateTime(hourA, minutesA);
+        DateTime dateTimeB = DateTime(hourB, minutesB);
+        return (dateTimeB).compareTo(dateTimeA);
+      }
+      return r;
+    });
   }
 
   @override
@@ -87,39 +108,21 @@ class _HomePageState extends State<HomePage> {
 
   ListView printTaskList() {
     print('printTaskList called');
+    Workmanager().cancelAll();
     return ListView.separated(
       shrinkWrap: true,
       itemCount: taskList.length,
       itemBuilder: (BuildContext context, int index) {
         var task = taskList[index];
-
-        String type = task.remindTime.toString().split(' ')[1];
         var date = DateFormat.jm().parse(task.remindTime!);
-        var time = DateFormat('hh:mm').format(date);
+        var time = DateFormat('HH:mm').format(date);
         int hour = int.parse(time.toString().split(':')[0]);
         int minutes = int.parse(time.toString().split(':')[1]);
-
         List<String> splitDate = task.date!.split('/');
-        DateTime dateTime = DateTime(
-            int.parse(splitDate[2]),
-            int.parse(splitDate[0]),
-            int.parse(splitDate[1]),
-            type == 'PM'
-                ? hour + 12
-                : hour == 12
-                    ? 0
-                    : hour,
-            minutes);
-        notifyHelper.scheduledNotify(
-            hour: type == 'PM'
-                ? hour + 12
-                : hour == 12
-                    ? 0
-                    : hour,
-            minutes: minutes,
-            task: task);
+        DateTime dateTime = DateTime(int.parse(splitDate[2]),
+            int.parse(splitDate[0]), int.parse(splitDate[1]), hour, minutes);
+        print('$dateTime...${getTime(dateTime)}');
         notifyManagment(dateTime, task);
-        //notifyScheduler(dateTime, task);
         return Container(
           margin: const EdgeInsets.symmetric(
             horizontal: 20,

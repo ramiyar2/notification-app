@@ -34,7 +34,6 @@ class HelperDb {
 
   static Future<int> putData(
       {Task? task, Reminder? reminder, required bool isNotify}) async {
-    print('data inserted');
     await initDb();
     return isNotify
         ? await _db!.insert(_nameNofiye, reminder!.toJson(),
@@ -46,7 +45,6 @@ class HelperDb {
   static Future<List<Map<String, dynamic>>> quary(
       {required bool isNotify}) async {
     await initDb();
-    print('quary called');
     return isNotify
         ? await _db!.query(_nameNofiye)
         : await _db!.query(_nameTaskes);
@@ -64,7 +62,6 @@ class HelperDb {
 
   static Future<int> update(
       {Task? task, Reminder? reminder, required bool isNotify}) async {
-    print('update Db called');
     await initDb();
     return isNotify
         ? await _db!.update(_nameNofiye, reminder!.toJson(),
